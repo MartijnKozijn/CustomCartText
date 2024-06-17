@@ -9,27 +9,42 @@ class CustomCartText extends Module
     {
         $this->name = 'customcarttext';
         $this->tab = 'front_office_features';
-        $this->version = '0.0.2';
+        $this->version = '0.1.4';
         $this->author = 'Jaymian-Lee Reinartz';
         $this->need_instance = 0;
+        $this->bootstrap = true; // Zorg ervoor dat bootstrap ingeschakeld is voor betere vormgeving
 
         parent::__construct();
 
         $this->displayName = $this->l('Custom Cart Text');
         $this->description = $this->l('Displays custom text in the cart.');
+        $this->confirmUninstall = $this->l('Are you sure you want to uninstall?');
 
         $this->ps_versions_compliancy = array('min' => '1.7', 'max' => _PS_VERSION_);
     }
 
     public function install()
     {
-        return parent::install() &&
-            $this->registerHook('displayCustomCartText');
+        if (!parent::install() ||
+            !$this->registerHook('displayCustomCartText') ||
+            !$this->registerHook('displayCartModalContent') ||
+            !Configuration::updateValue('CUSTOMCARTTEXT_CUSTOM_TEXT', 'Default custom text')
+        ) {
+            return false;
+        }
+        return true;
     }
 
     public function uninstall()
     {
-        return parent::uninstall();
+        if (!parent::uninstall() ||
+            !$this->unregisterHook('displayCustomCartText') ||
+            !$this->unregisterHook('displayCartModalContent') ||
+            !Configuration::deleteByName('CUSTOMCARTTEXT_CUSTOM_TEXT')
+        ) {
+            return false;
+        }
+        return true;
     }
 
     public function hookDisplayCustomCartText($params)
@@ -55,6 +70,9 @@ class CustomCartText extends Module
             }
         }
 
+        // Voeg de weergave van het logo toe
+        $output .= $this->display(__FILE__, 'views/templates/admin/logo.tpl');
+        
         return $output.$this->displayForm();
     }
 
