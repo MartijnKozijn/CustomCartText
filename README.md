@@ -1,5 +1,3 @@
-![BannerCCT](https://github.com/MartijnKozijn/CustomCartText/assets/56151997/91196289-8f05-4eba-9332-d247f82a0fb4)
-
 ### CustomCartText Module
 
 ## Overview
