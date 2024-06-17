@@ -1,5 +1,7 @@
 ### CustomCartText Module
 
+![BannerCCT](https://github.com/MartijnKozijn/CustomCartText/assets/56151997/91196289-8f05-4eba-9332-d247f82a0fb4)
+
 ## Overview
 The CustomCartText module for PrestaShop allows you to display custom text in the shopping cart modal. This can be useful for providing additional information to customers during their shopping experience.
 
